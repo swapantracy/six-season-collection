@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Six Season Collection</title>
+<style>
+    body {
+        font-family: 'Georgia', serif;
+        margin: 0;
+        background-color: #f9f7f1;
+        color: #333;
+    }
+    header {
+        background-color: #d8c3a5;
+        padding: 20px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+    }
+    header p {
+        font-style: italic;
+        margin: 5px 0 0;
+    }
+    nav {
+        background: #8e8d8a;
+        padding: 10px;
+        text-align: center;
+    }
+    nav a {
+        color: #fff;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .product {
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 15px;
+        text-align: center;
+    }
+    .product img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #e98074;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-weight: bold;
+    }
+    button:hover {
+        background-color: #d66f61;
+    }
+    #cart {
+        padding: 20px;
+    }
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Six Season Collection</h1>
+    <p>Wear Your Dreams</p>
+</header>
+<nav>
+    <a href="#shop">Shop</a>
+    <a href="#cart">Cart (<span id="cart-count">0</span>)</a>
+</nav>
+<section id="shop">
+    <div class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Sharee">
+            <h3>Sharee</h3>
+            <p>$40</p>
+            <button onclick="addToCart('Sharee', 40)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Three Piece">
+            <h3>Three Piece</h3>
+            <p>$35</p>
+            <button onclick="addToCart('Three Piece', 35)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Baby Clothes">
+            <h3>Cloth for Babies</h3>
+            <p>$20</p>
+            <button onclick="addToCart('Baby Clothes', 20)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Jewelry">
+            <h3>Jewelry</h3>
+            <p>$50</p>
+            <button onclick="addToCart('Jewelry', 50)">Add to Cart</button>
+        </div>
+    </div>
+</section>
+<section id="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <h3>Total: $<span id="cart-total">0</span></h3>
+</section>
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCart();
+    }
+
+    function updateCart() {
+        let cartItems = document.getElementById('cart-items');
+        cartItems.innerHTML = '';
+        let total = 0;
+        cart.forEach((item, index) => {
+            total += item.price;
+            cartItems.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name} - $${item.price}</span>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            `;
+        });
+        document.getElementById('cart-total').innerText = total;
+        document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+</script>
+</body>
+</html>
